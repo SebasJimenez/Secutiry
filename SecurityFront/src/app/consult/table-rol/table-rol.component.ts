@@ -59,7 +59,7 @@ export class TableRolComponent implements OnInit {
       .subscribe(
       (success) => {
         if (success) {
-         this.showModify();
+         this.showModify(rol.id);
          this.rolCons();
         }
       }
@@ -72,7 +72,7 @@ export class TableRolComponent implements OnInit {
     .subscribe(
       (success) => {
         if (success) {
-          this.showDelete();
+          this.showDelete(rol.id);
           this.rolCons();
         }
       }
@@ -102,12 +102,12 @@ export class TableRolComponent implements OnInit {
     this.messageService.add({key: 'custom', severity: 'success', summary: 'Crear', detail: 'Se creó un Rol'});
   }
 
-  showDelete() {
-    this.messageService.add({key: 'custom', severity: 'success', summary: 'Eliminar', detail: 'Se eliminó un Rol'});
+  showDelete(id: number) {
+    this.messageService.add({key: 'custom', severity: 'success', summary: 'Eliminar', detail: 'Se eliminó el rol #' + id});
   }
 
-  showModify() {
-    this.messageService.add({key: 'custom', severity: 'success', summary: 'Modificar', detail: 'Se modificó un rol'});
+  showModify(id: number) {
+    this.messageService.add({key: 'custom', severity: 'success', summary: 'Modificar', detail: 'Se modificó el rol #' + id});
   }
   showConfirm(rol: Rol) {
     this.u = rol;
@@ -116,7 +116,7 @@ export class TableRolComponent implements OnInit {
     key: 'c',
     sticky: true,
     severity: 'warn',
-    summary: '¿Estás Seguro?',
+    summary: '¿Estás Seguro de eliminar el rol #' + rol.id + '?',
     detail: 'Confirma para proceder'});
   }
 

@@ -60,7 +60,7 @@ export class TableComponent implements OnInit {
     .subscribe(
       success => {
         if (success) {
-          this.showDelete();
+          this.showDelete(users.id);
           this.userCons();
         }
       }
@@ -104,7 +104,7 @@ export class TableComponent implements OnInit {
       .subscribe(
       success => {
         if (success) {
-         this.showModify();
+         this.showModify(user.id);
          this.userCons();
         }
       });
@@ -115,12 +115,12 @@ export class TableComponent implements OnInit {
     this.messageService.add({key: 'custom', severity: 'success', summary: 'Crear', detail: 'Se Creó un usuario'});
   }
 
-  showModify() {
-    this.messageService.add({key: 'custom', severity: 'success', summary: 'Modificar', detail: 'Se modificó un usuario'});
+  showModify(id: number) {
+    this.messageService.add({key: 'custom', severity: 'success', summary: 'Modificar', detail: 'Se modificó el usuario #' + id});
   }
 
-  showDelete() {
-    this.messageService.add({key: 'custom', severity: 'success', summary: 'Eliminar', detail: 'Se Eliminó un usuario'});
+  showDelete(id: number) {
+    this.messageService.add({key: 'custom', severity: 'success', summary: 'Eliminar', detail: 'Se Eliminó el usuario #' + id});
   }
 
   onCreate(registerForm) {
@@ -135,7 +135,7 @@ export class TableComponent implements OnInit {
     key: 'c',
     sticky: true,
     severity: 'warn',
-    summary: '¿Estás seguro?',
+    summary: '¿Estás seguro de eliminar el usuario #' + user.id + '?',
     detail: 'Confirma para proceder'});
   }
 

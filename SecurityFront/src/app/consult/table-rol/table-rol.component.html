@@ -1,0 +1,86 @@
+<p-toolbar>
+  <div class="row" style="margin: 0.5%">
+    <div class="col-xs-6">
+      <button pButton type="button" (click)="visibleSidebar1 = true" icon="pi pi-list"></button>
+    </div>
+    <div class="col-xs-6" style="margin-left: 35%">
+      <h2>Menu Administrador</h2>
+    </div>
+  </div>
+</p-toolbar>
+<p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+    <br>
+    <button pButton type="button" (click)="visibleSidebar1 = false" routerLink="/consult/user" label="Usuarios"
+            class="ui-button" style="width: 100%"></button>
+    <div></div>
+    <br>
+    <button pButton type="button" (click)="visibleSidebar1 = false" routerLink="/consult/rol" label="Roles"
+            class="ui-button" style="width: 100%"></button>
+    <div></div>
+    <br>
+    <button pButton type="button" (click)="visibleSidebar1 = false" routerLink="/login" label="Salir"
+            class="ui-button-danger" style="width: 100%"></button>
+</p-sidebar>
+<p-table [value]="roles" dataKey="user_id" class="hyphenation" [paginator]="true" [rows]="9">
+    <ng-template pTemplate="caption">
+        Lista de Roles
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Id</th>
+            <th>Rol</th>
+            <th style="width:10em">
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="rowData">
+            <td>
+                {{rowData.id}}
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="rowData.name" (keydown.enter)="onModify(rowData)"
+                        (blur)="onModify(rowData)" required oninput="this.value=this.value.replace(/[^a-zA-Z\á\é\í\ó\ú\ \ñ]/g,'');">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{rowData.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td style="text-align:center">
+
+                <button *ngIf="!editing" pButton type="button" pEditableRow icon="pi pi-trash"
+                        pTooltip="Eliminar un rol" class="ui-button-info" (click)="showConfirm(rowData)"
+                        tooltipPosition="bottom"></button>
+            </td>
+        </tr>
+        <p-toast position="center" key="c" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+          <ng-template let-message pTemplate="message">
+              <div style="text-align: center">
+                  <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+                  <h3>{{message.summary}}</h3>
+                  <p>{{message.detail}}</p>
+              </div>
+              <div class="ui-g ui-fluid">
+                  <div class="ui-g-6">
+                      <button type="button" pButton (click)="onConfirm()" label="Sí" class="ui-button-success"></button>
+                  </div>
+                  <div class="ui-g-6">
+                      <button type="button" pButton (click)="onReject()" label="No" class="ui-button-secondary"></button>
+                  </div>
+              </div>
+          </ng-template>
+      </p-toast>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button pButton type="button" label="Agregar rol" icon="pi pi-plus"
+                    class="ui-button-info" (click)="onRowAdd()" style="margin-left: 91%"></button>
+        </div>
+    </ng-template>
+</p-table>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+<p-toast [style]="{marginTop: '80px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+

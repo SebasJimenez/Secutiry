@@ -1,0 +1,121 @@
+<div class="row justify-content-center align-items-center" *ngIf="createService.userLogged">
+  <div class="col-10">
+      <div class="card">
+          <p>&nbsp;&nbsp;&nbsp;</p>
+          <h3 align= "center">Creación de usuario</h3>
+          <div class="card-body">
+              <form [formGroup]= "registerForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                      <input type="text" class="form-control" formControlName="nameC"
+                            size="30" pInputText placeholder="Nombre completo"
+                            oninput="this.value=this.value.replace(/[^a-zA-Z\á\é\í\ó\ú\ \ñ]/g,'');">
+
+                      <div *ngIf="nameC.invalid && (nameC.dirty || nameC.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="nameC.errors">
+                      El nombre es obligatorio.
+                      </div>
+                      </div>
+                    </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control" formControlName="email"
+                            size="30" pInputText placeholder="Correo Electronico">
+
+                      <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="!!f.email.errors.required">
+                        El email es requerido.
+                      </div>
+                      <div *ngIf="!!f.email.errors.email">
+                        El email debe ser una dirección válida.
+                      </div>
+                      </div>
+                    </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control" formControlName="user"
+                            size="30" pInputText placeholder="Usuario">
+
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="username.errors">
+                    El usuario es requerido.
+                    </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="ui-inputgroup">
+                        <input id="float-input-2" type="password" class="form-control" formControlName="password"
+                              size="30" pInputText placeholder="Contraseña">
+                      </div>
+                      <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                      class="alert alert-danger">
+                      <div *ngIf="password.errors">
+                      La contraseña es requerida.
+                      </div>
+                      </div>
+                      <br>
+                      <div class="p-grid">
+                        <div class="form-group p-col-2">
+                        </div>
+                        <div class="form-group p-col-6" style="text-align:center">
+                          <p-dropdown [options]="roles" placeholder="Selecciona un Rol" formControlName='rol'
+                                      optionLabel= "name" [showClear]="true"></p-dropdown>
+                        </div>
+                      </div>
+                      <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+                  </div>
+                  <div class="p-grid">
+                    <div class="form-group p-col-6">
+                    <button pButton type="button" label="Cancelar" class="ui-button-raised ui-button-danger"
+                            (click)= "cancel()"
+                            ></button>
+                    </div>
+                    <!-- <p>&nbsp;&nbsp;&nbsp;</p> -->
+                    <div class="form-group p-col-4">
+                    <button pButton type="submit" label="Crear" class="ui-button-raised ui-button-success"
+                            [disabled]="registerForm.invalid"
+                            ></button>
+                    </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row justify-content-center align-items-center" *ngIf="createService.rolLogged">
+  <div class="col-10">
+      <div class="card">
+          <p>&nbsp;&nbsp;&nbsp;</p>
+          <h3 align= "center">Creación de roles</h3>
+          <div class="card-body">
+              <form [formGroup]= "rolForm">
+                  <div class="form-group">
+                      <input type="text" class="form-control" formControlName="name"
+                            size="30" pInputText placeholder="Rol">
+
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="name.errors">
+                    El rol es requerido.
+                    </div>
+                    </div>
+                  </div>
+                  <div class="p-grid">
+                    <div class="form-group p-col-6">
+                        <button pButton type="button" label="Cancelar" class="ui-button-raised ui-button-danger"
+                                (click)= "cancel()"></button>
+                    </div>
+                    <div class="form-group p-col-6">
+                      <button pButton label="Crear" class="ui-button-raised ui-button-success"
+                              (click)= "onSubmit()" [disabled]="rolForm.invalid"></button>
+                    </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<p-toast [style]="{marginTop: '80px'}" styleClass="custom-toast" key="custom" position="bottom-center"></p-toast>
+
+
